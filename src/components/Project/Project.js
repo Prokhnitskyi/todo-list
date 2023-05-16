@@ -1,7 +1,8 @@
 import defaultIcon from '../../assets/project-icons/default.svg';
 
 export class Project {
-  constructor ({name, icon = defaultIcon, color = '#002aff', description = ''}) {
+  constructor ({id, name, icon = defaultIcon, color = '#002aff', description = ''}) {
+    this.id = id;
     this.name = name;
     this.icon = icon;
     this.color = color;
