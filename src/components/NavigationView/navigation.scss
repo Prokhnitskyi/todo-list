@@ -1,0 +1,100 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.navigation {
+  background-color: $color-2;
+  grid-area: nav;
+  padding: 1rem;
+}
+
+.projects {
+
+  & h2 {
+    margin-bottom: 1rem;
+  }
+
+  &__list {
+    @include reset-list;
+  }
+
+  &__item {
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 4px;
+  }
+
+  &__select {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 1rem;
+
+    &::before {
+      content: '';
+      font-size: 1.1rem;
+      font-weight: bold;
+      display: inline-block;
+      width: 2ch;
+      margin-right: 4px;
+    }
+
+    &--active {
+      font-weight: bold;
+    }
+
+    &--active::before {
+      content: '✓ ';
+    }
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem
+}
+
+.filters {
+
+  & h2 {
+    margin-bottom: 1rem;
+  }
+
+  &__tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__tag {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: $background-color;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+
+    &--selected {
+      background-color: $color-3;
+      color: $background-color;
+    }
+
+    &::before {
+      content: '#';
+    }
+  }
+
+  &__state {
+    display: flex;
+    flex-direction: column;
+
+    & .input-wrapper {
+      margin-bottom: 0.5rem;
+    }
+  }
+}

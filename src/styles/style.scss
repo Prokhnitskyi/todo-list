@@ -19,6 +19,16 @@ body {
   padding: 0;
   min-height: 100vh;
   min-height: 100 svh;
+  color: $text-color;
+  background-color: $background-color;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+}
+
+h2 {
+  font-size: 1.2rem;
 }
 
 .container {
@@ -26,24 +36,25 @@ body {
   min-height: 100 svh;
   height: 100%;
   display: grid;
-  grid-template-columns: min(30%, 280px) 1fr;
+  grid-template-columns: min-content 1fr;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
-                      "header header"
+                      "nav header"
                       "nav main"
-                      "footer footer";
+                      "nav footer";
 }
 
 .header {
   grid-area: header;
   padding: 1rem;
-  //background-color: steelblue;
-}
+  background-color: $color-3;
 
-.navigation {
-  grid-area: nav;
-  padding: 1rem;
-  //background-color: forestgreen;
+  &__title {
+    color: $background-color;
+    text-shadow: 0 0 5px $text-color;
+    text-align: center;
+    font-size: 1.5rem;
+  }
 }
 
 .content {
@@ -53,7 +64,42 @@ body {
 }
 
 .footer {
+  background-color: $color-3;
+  color: $background-color;
   grid-area: footer;
   padding: 1rem;
-  //background-color: darkkhaki;
+
+  &__made-by {
+    text-align: center;
+  }
+
+  & a, & a:visited {
+    @include links-on-accent;
+  }
+}
+
+.button {
+  min-width: 120px;
+  background-color: $color-3;
+  padding: 0.5rem 1rem;
+  color: $background-color;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: filter ease-in-out 400ms;
+
+  &:hover {
+    filter: brightness(1.2) drop-shadow(0 0 2px $text-color);
+  }
+
+  &:active {
+    filter: brightness(0.95);
+  }
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
 }

@@ -9,10 +9,64 @@
 </head>
 <body>
 <div class="container">
-    <header class="header"></header>
-    <nav class="navigation"></nav>
+    <header class="header">
+        <h1 class="header__title">TODO List</h1>
+    </header>
+    <nav class="navigation">
+        <div class="projects">
+            <h2>Projects:</h2>
+            <ul class="projects__list">
+                <li class="projects__item">
+                    <button type="button" class="projects__select projects__select--active">Project 1</button>
+                    <button type="button" class="projects__edit">edit</button>
+                </li>
+                <li class="projects__item">
+                    <button type="button" class="projects__select">Project 2 Project 2</button>
+                    <button type="button" class="projects__edit">edit</button>
+                </li>
+                <li class="projects__item">
+                    <button type="button" class="projects__select">Project 3</button>
+                    <button type="button" class="projects__edit">edit</button>
+                </li>
+            </ul>
+        </div>
+        <div class="controls">
+            <h2>Controls:</h2>
+            <button class="controls__add-project button">Add project</button>
+            <button class="controls__add-item button">Add ToDo item</button>
+            <button class="controls__theme-switch button">Switch theme</button>
+        </div>
+        <div class="filters">
+            <div class="filters__tags">
+                <h2>Tags:</h2>
+                <div class="filters__tags-container">
+                    <span class="filters__tag">Lorem ipsum dolor sit amet.</span>
+                    <span class="filters__tag">tag2</span>
+                    <span class="filters__tag filters__tag--selected">tag3</span>
+                    <span class="filters__tag">tag2</span>
+                    <span class="filters__tag">tag3</span>
+                    <span class="filters__tag">tag2</span>
+                    <span class="filters__tag">tag3</span>
+                </div>
+            </div>
+            <div class="filters__state">
+                <h2>States:</h2>
+                <div class="input-wrapper">
+                    <input type="checkbox" name="completed" id="completed">
+                    <label for="completed">Completed</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="checkbox" name="flagged" id="flagged">
+                    <label for="flagged">Flagged</label>
+                </div>
+            </div>
+        </div>
+    </nav>
     <main class="content"></main>
-    <footer class="footer"></footer>
+    <footer class="footer">
+        <div class="footer__made-by">Made by: <a href="https://github.com/Prokhnitskyi/" target="_blank" title="Github">Andrii
+            Prokhnitskyi</a></div>
+    </footer>
 </div>
 </body>
 </html>
