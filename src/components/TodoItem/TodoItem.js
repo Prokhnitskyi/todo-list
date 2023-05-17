@@ -1,3 +1,4 @@
+import './todo-item.scss';
 import { uuidv4 } from '../../utility';
 
 export class TodoItem {

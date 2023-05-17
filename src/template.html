@@ -34,7 +34,6 @@
             <h2>Controls:</h2>
             <button class="controls__add-project button">Add project</button>
             <button class="controls__add-item button">Add ToDo item</button>
-            <button class="controls__theme-switch button">Switch theme</button>
         </div>
         <div class="filters">
             <div class="filters__tags">
@@ -62,7 +61,58 @@
             </div>
         </div>
     </nav>
-    <main class="content"></main>
+    <main class="content">
+        <div class="todos">
+            <div class="todo">
+                <h3 class="todo__title todo__title--active"><span class="todo__priority">!!</span> Title</h3>
+                <div class="todo__details todo__details--active">
+                    <div class="todo__controls">
+                        <button type="button" class="todo__edit">edit</button>
+                        <button type="button" class="todo__flag">🚩</button>
+                        <button type="button" class="todo__completed">✓</button>
+                        <button type="button" class="todo__delete">delete</button>
+                    </div>
+                    <div class="todo__content">
+                        <p class="todo__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi
+                            est hic libero nulla perspiciatis quo?</p>
+                        <div class="todo__url">URL: <a href="#" target="_blank">https://google.com</a></div>
+                        <div class="todo__due-date">Due date:
+                            <time datetime="2023-01-28">2023-01-28</time>
+                        </div>
+                        <div class="todo__tags">
+                            <div class="todo__tag">tag1</div>
+                            <div class="todo__tag">tag2</div>
+                            <div class="todo__tag">tag3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="todo">
+                <h3 class="todo__title"><span class="todo__priority">!!!</span>Title</h3>
+                <div class="todo__details">
+                    <div class="todo__controls">
+                        <button type="button" class="todo__edit">edit</button>
+                        <button type="button" class="todo__flag todo__flag--active">🚩</button>
+                        <button type="button" class="todo__completed todo__completed--active">✓</button>
+                        <button type="button" class="todo__delete">delete</button>
+                    </div>
+                    <div class="todo__content">
+                        <p class="todo__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi
+                            est hic libero nulla perspiciatis quo?</p>
+                        <div class="todo__url">URL: <a href="#" target="_blank">https://google.com</a></div>
+                        <div class="todo__due-date">Due date:
+                            <time datetime="2023-01-28">2023-01-28</time>
+                        </div>
+                        <div class="todo__tags">
+                            <div class="todo__tag">tag1</div>
+                            <div class="todo__tag">tag2</div>
+                            <div class="todo__tag">tag3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
     <footer class="footer">
         <div class="footer__made-by">Made by: <a href="https://github.com/Prokhnitskyi/" target="_blank" title="Github">Andrii
             Prokhnitskyi</a></div>
