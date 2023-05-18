@@ -118,5 +118,41 @@
             Prokhnitskyi</a></div>
     </footer>
 </div>
+<dialog class="todo-modal modal" id="todo-modal">
+    <h3 class="todo-modal__title">New todo item:</h3>
+    <div class="wrapper">
+        <form method="dialog" class="todo-modal__form">
+            <div class="input-column-wrapper">
+                <label for="set-title">Title*:</label>
+                <input class="todo-modal__input text-input" type="text" placeholder="Title" id="set-title" required>
+            </div>
+            <div class="input-column-wrapper">
+                <label for="set-description">Description:</label>
+                <textarea class="todo-modal__input text-input" placeholder="Description..." id="set-description" maxlength="256"></textarea>
+            </div>
+            <div class="input-column-wrapper">
+                <label for="set-due-date">Due Date: </label>
+                <input class="todo-modal__input" type="date" name="" id="set-due-date">
+            </div>
+            <div class="input-column-wrapper">
+                <label for="set-url">URL: </label>
+                <input class="todo-modal__input text-input" type="url" name="" id="set-url" placeholder="https://google.com">
+            </div>
+            <div class="input-column-wrapper">
+                <label for="set-tags">Tags:</label>
+                <input class="todo-modal__input text-input" type="text" placeholder="tag1, tag2, tag3" id="set-tags">
+            </div>
+            <div class="input-wrapper">
+                <input type="checkbox" name="set-flagged" id="set-flagged">
+                <label for="set-flagged">Flagged</label>
+            </div>
+
+            <div class="buttons-wrapper">
+                <button class="button" type="reset">Close</button>
+                <button class="button" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</dialog>
 </body>
 </html>

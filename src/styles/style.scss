@@ -78,6 +78,17 @@ h2 {
   }
 }
 
+.text-input {
+  border: 2px solid $color-3;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+
+  &::placeholder {
+    color: $text-color;
+  }
+}
+
 .button {
   min-width: 120px;
   background-color: $color-3;
@@ -98,8 +109,34 @@ h2 {
   }
 }
 
+.buttons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
 .input-wrapper {
   display: flex;
   align-items: center;
   column-gap: 0.5rem;
+}
+
+.input-column-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  & label {
+    font-weight: bold;
+  }
+}
+
+.modal {
+  border: none;
+  width: clamp(320px, 50vw, 640px);
+
+  &::backdrop {
+    backdrop-filter: blur(4px) brightness(0.8);
+  }
 }

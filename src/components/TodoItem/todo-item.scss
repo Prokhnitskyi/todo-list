@@ -110,5 +110,21 @@
   &__tag {
     @include tag;
   }
+}
 
+.todo-modal {
+  &__title {
+    margin-bottom: 1rem;
+  }
+
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  & textarea {
+    resize: vertical;
+  }
 }
