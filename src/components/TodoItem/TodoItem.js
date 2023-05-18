@@ -3,17 +3,17 @@ import { uuidv4 } from '../../utility';
 
 export class TodoItem {
   constructor ({
-    title = '',
-    description = '',
+    title,
+    description,
     URL,
-    dueDate = new Date(),
-    priority = 0,
-    flag = false,
+    dueDate,
+    priority,
+    flag,
     completed = false,
     tags = [],
   }) {
-    if (title.length === 0 && description.length === 0) {
-      throw new Error('Title and description can\'t both be empty');
+    if (title.length === 0) {
+      throw new Error('Title can\'t be empty');
     }
     this.uuid = uuidv4();
     this.title = title;
