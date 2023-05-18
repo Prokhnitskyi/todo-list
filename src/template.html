@@ -119,7 +119,7 @@
     </footer>
 </div>
 <dialog class="todo-modal modal" id="todo-modal">
-    <h3 class="todo-modal__title">New todo item:</h3>
+    <h3 class="todo-modal__title">Todo item:</h3>
     <div class="wrapper">
         <form method="dialog" class="todo-modal__form">
             <div class="input-column-wrapper">
@@ -154,5 +154,39 @@
         </form>
     </div>
 </dialog>
+<dialog class="modal" id="confirm-modal">
+    <h3 class="todo-modal__title">Are you sure?</h3>
+    <div class="wrapper">
+        <form method="dialog">
+            <div class="buttons-wrapper">
+                <button class="button" type="reset">Cancel</button>
+                <button class="button" type="submit">Confirm</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+<dialog class="modal project-modal" id="project-modal">
+    <h3 class="todo-modal__title">Project:</h3>
+    <div class="wrapper">
+        <form method="dialog" class="project-modal__form">
+            <div class="project-modal__two-col">
+                <div class="input-column-wrapper">
+                    <label for="set-project-name">Name:</label>
+                    <input class="text-input" type="text" name="set-project-name" id="set-project-name" required>
+                </div>
+                <div class="input-column-wrapper">
+                    <label for="set-project-color">Color:</label>
+                    <input type="color" name="set-project-color" id="set-project-color" value="#395b64">
+                </div>
+            </div>
+            <button type="button" class="button">Delete project</button>
+            <div class="buttons-wrapper">
+                <button class="button" type="reset">Close</button>
+                <button class="button" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+<script>document.getElementById('project-modal').showModal();</script>
 </body>
 </html>

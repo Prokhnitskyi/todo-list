@@ -1,11 +1,9 @@
-import defaultIcon from '../../assets/project-icons/default.svg';
+import './project-modal.scss';
 
 export class Project {
-  constructor ({id, name, icon = defaultIcon, color = '#002aff', description = ''}) {
+  constructor ({id, name, color = '#395B64'}) {
     this.id = id;
     this.name = name;
-    this.icon = icon;
     this.color = color;
-    this.description = description;
   }
 }

@@ -1,0 +1,31 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.project-modal {
+  &__title {
+    margin-bottom: 1rem;
+  }
+
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__two-col {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    & > :first-child {
+      flex: 1;
+    }
+  }
+
+  & [type="color"] {
+    height: 100%;
+  }
+
+}
