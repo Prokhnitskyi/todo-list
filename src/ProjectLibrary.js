@@ -52,6 +52,15 @@ export class ProjectLibrary {
     this.projects[projectId].project.selected = true;
   }
 
+  getSelectedProject() {
+    for (const projectsKey in this.projects) {
+      if (this.projects[projectsKey].project.selected) {
+        return projectsKey;
+        break;
+      }
+    }
+  }
+
   editProject(projectId, {name, color}) {
     this.projects[projectId].project.name = name;
     this.projects[projectId].project.color = color;

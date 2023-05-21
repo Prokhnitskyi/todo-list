@@ -4,5 +4,7 @@ import { UserInterfaceController } from './UserInterfaceController';
 
 const userInterface = new UserInterfaceController();
 userInterface.initNavView();
-userInterface.initNavHandlers();
+userInterface.initNavProjectHandlers();
+userInterface.initNavTodoHandlers();
+userInterface.initModalHandlers();
 

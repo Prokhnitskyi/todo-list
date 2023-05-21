@@ -126,11 +126,11 @@
         <form method="dialog" class="todo-modal__form">
             <div class="input-column-wrapper">
                 <label for="set-title">Title*:</label>
-                <input class="todo-modal__input styled-input" type="text" placeholder="Title" id="set-title" required>
+                <input class="todo-modal__input styled-input" type="text" placeholder="Title" name="set-title" id="set-title" required>
             </div>
             <div class="input-column-wrapper">
                 <label for="set-description">Description:</label>
-                <textarea class="todo-modal__input styled-input" placeholder="Description..." id="set-description" maxlength="256"></textarea>
+                <textarea class="todo-modal__input styled-input" placeholder="Description..." name="set-description" id="set-description" maxlength="256"></textarea>
             </div>
             <div class="input-column-wrapper">
                 <label for="set-due-date">Due Date: </label>
@@ -150,7 +150,7 @@
             </div>
             <div class="input-column-wrapper">
                 <label for="set-tags">Tags:</label>
-                <input class="todo-modal__input styled-input" type="text" placeholder="tag1, tag2, tag3" id="set-tags">
+                <input class="todo-modal__input styled-input" type="text" placeholder="tag1, tag2, tag3" name="set-tags" id="set-tags">
             </div>
             <div class="input-wrapper">
                 <input type="checkbox" name="set-flagged" id="set-flagged">
@@ -189,7 +189,7 @@
                     <input type="color" name="set-project-color" id="set-project-color" value="#395b64">
                 </div>
             </div>
-            <button type="button" class="button">Delete project</button>
+            <button type="button" class="button project-modal__delete">Delete project</button>
             <div class="buttons-wrapper">
                 <button class="button" type="reset">Close</button>
                 <button class="button" type="submit">Save</button>

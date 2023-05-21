@@ -7,8 +7,8 @@ export class TodoItem {
     description,
     URL,
     dueDate,
-    priority,
-    flag,
+    priority = 'Medium',
+    flag = false,
     completed = false,
     tags = [],
   }) {
