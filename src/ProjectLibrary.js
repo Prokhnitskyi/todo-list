@@ -12,7 +12,7 @@ export class ProjectLibrary {
   addDefaultProject () {
     const id = this.idCounter;
     const project = new Project(
-      { id: this.idCounter, name: 'My new project', color: 'black' });
+      { id: this.idCounter, name: 'Default project', color: 'black', selected: true });
     const item = new TodoItem({ title: 'My new item' });
     this.projects[this.idCounter] = { id, project, items: [item] };
     this.idCounter++;
