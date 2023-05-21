@@ -79,6 +79,7 @@
                         <div class="todo__due-date">Due date:
                             <time datetime="2023-01-28">2023-01-28</time>
                         </div>
+                        <div class="todo__priority"><strong>Priority:</strong> <span class="todo__priority-value">Medium</span></div>
                         <div class="todo__tags">
                             <div class="todo__tag">tag1</div>
                             <div class="todo__tag">tag2</div>
@@ -103,6 +104,7 @@
                         <div class="todo__due-date">Due date:
                             <time datetime="2023-01-28">2023-01-28</time>
                         </div>
+                        <div class="todo__priority"><strong>Priority:</strong> <span class="todo__priority-value">Medium</span></div>
                         <div class="todo__tags">
                             <div class="todo__tag">tag1</div>
                             <div class="todo__tag">tag2</div>
@@ -124,23 +126,31 @@
         <form method="dialog" class="todo-modal__form">
             <div class="input-column-wrapper">
                 <label for="set-title">Title*:</label>
-                <input class="todo-modal__input text-input" type="text" placeholder="Title" id="set-title" required>
+                <input class="todo-modal__input styled-input" type="text" placeholder="Title" id="set-title" required>
             </div>
             <div class="input-column-wrapper">
                 <label for="set-description">Description:</label>
-                <textarea class="todo-modal__input text-input" placeholder="Description..." id="set-description" maxlength="256"></textarea>
+                <textarea class="todo-modal__input styled-input" placeholder="Description..." id="set-description" maxlength="256"></textarea>
             </div>
             <div class="input-column-wrapper">
                 <label for="set-due-date">Due Date: </label>
-                <input class="todo-modal__input" type="date" name="" id="set-due-date">
+                <input class="todo-modal__input styled-input" type="date" name="set-due-date" id="set-due-date">
             </div>
             <div class="input-column-wrapper">
                 <label for="set-url">URL: </label>
-                <input class="todo-modal__input text-input" type="url" name="" id="set-url" placeholder="https://google.com">
+                <input class="todo-modal__input styled-input" type="url" name="set-url" id="set-url" placeholder="https://google.com">
+            </div>
+            <div class="input-column-wrapper">
+                <label for="set-priority">Priority: </label>
+                <select class="todo-modal__input styled-input" name="set-priority" id="set-priority">
+                    <option value="Low">Low</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="High">High</option>
+                </select>
             </div>
             <div class="input-column-wrapper">
                 <label for="set-tags">Tags:</label>
-                <input class="todo-modal__input text-input" type="text" placeholder="tag1, tag2, tag3" id="set-tags">
+                <input class="todo-modal__input styled-input" type="text" placeholder="tag1, tag2, tag3" id="set-tags">
             </div>
             <div class="input-wrapper">
                 <input type="checkbox" name="set-flagged" id="set-flagged">
@@ -172,7 +182,7 @@
             <div class="project-modal__two-col">
                 <div class="input-column-wrapper">
                     <label for="set-project-name">Name:</label>
-                    <input class="text-input" type="text" name="set-project-name" id="set-project-name" required>
+                    <input class="styled-input" type="text" name="set-project-name" id="set-project-name" required>
                 </div>
                 <div class="input-column-wrapper">
                     <label for="set-project-color">Color:</label>
@@ -187,6 +197,5 @@
         </form>
     </div>
 </dialog>
-<script>document.getElementById('project-modal').showModal();</script>
 </body>
 </html>
