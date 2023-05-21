@@ -9,14 +9,34 @@ export class UserInterfaceController {
 
   }
 
-  init() {
+  initNav() {
     this.library.addDefaultProject();
     const projects = this.library.projects;
-    const projectsNamesArray = getProjectsNamesWithStatus(projects);
+    // temp start
+    this.library.addTodoItem('0', new TodoItem({ title: 'My new test', tags : ['test1', 'test2'] }));
+    this.library.addTodoItem('0', new TodoItem({ title: 'My new test', tags : ['test3'] }));
     console.log(projects);
-    console.log(projectsNamesArray);
+    // temp end
+    const projectsNamesArray = getProjectsNamesWithStatus(projects);
     this.navigation.renderProjectsList(projectsNamesArray);
+    const tags = getAllTags (projects);
+    this.navigation.renderTags(tags);
   }
+}
+
+function getAllTags (projects) {
+  const array = [];
+  for (const projectKey in projects) {
+    const itemsTags = [];
+    projects[projectKey].items.forEach((item) => {
+      itemsTags.push(...item.tags);
+    });
+    array.push(...itemsTags);
+  }
+
+
+
+  return array;
 }
 
 function getProjectsNamesWithStatus (projects) {

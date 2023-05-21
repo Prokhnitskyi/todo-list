@@ -13,10 +13,12 @@ export class NavigationView {
   }
 
   renderProjectsList(projectsNamesArray) {
-    let htmlContent = projectsNamesArray.map((project) => (
+    this.projectList.innerHTML = projectsNamesArray.map((project) => (
       `<li class="projects__item">
             <button type="button"
-             class="projects__select ${project.selected ? 'projects__select--active': ''}">
+             class="projects__select ${project.selected
+        ? 'projects__select--active'
+        : ''}">
                 ${project.name}
              </button>
             <button type="button" class="projects__edit">
@@ -24,10 +26,17 @@ export class NavigationView {
             </button>
         </li>`
     )).join('');
-    this.projectList.innerHTML = htmlContent;
   }
 
-  renderTags() {
+  renderTags(tagsList) {
+    if (tagsList.length === 0) {
+      this.tags.style.display = 'none';
+    } else {
+      this.tags.style.display = 'block';
+    }
 
+    this.filtersTagContainer.innerHTML = tagsList.map((tag) => (
+      `<span class="filters__tag">${tag}</span>`
+    )).join('');
   }
 }
