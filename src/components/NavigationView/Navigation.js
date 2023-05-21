@@ -1,14 +1,9 @@
 import './navigation.scss';
 
 export class NavigationView {
-  nav = document.querySelector('.navigation');
   projectList = document.querySelector('.projects__list');
-  addProjectItemBtn = document.querySelector('.controls__add-project');
-  addTodoItemBtn = document.querySelector('.controls__add-item');
   tags = document.querySelector('.filters__tags');
   filtersTagContainer = document.querySelector('.filters__tags-container');
-  completedFilter = document.querySelector('#completed');
-  flaggedFilter = document.querySelector('#flagged');
   constructor () {
   }
 
@@ -16,12 +11,16 @@ export class NavigationView {
     this.projectList.innerHTML = projectsNamesArray.map((project) => (
       `<li class="projects__item">
             <button type="button"
-             class="projects__select ${project.selected
-        ? 'projects__select--active'
-        : ''}">
+             class="projects__select 
+             ${project.selected ? 'projects__select--active' : ''}" 
+             data-project-id="${project.id}"
+             style="color: ${project.color}">
                 ${project.name}
              </button>
-            <button type="button" class="projects__edit">
+            <button type="button" class="projects__edit"
+             data-project-id="${project.id}"
+             data-project-name="${project.name}"
+             data-project-color="${project.color}">
                 edit
             </button>
         </li>`

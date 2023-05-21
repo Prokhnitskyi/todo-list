@@ -19,6 +19,7 @@ export class ProjectLibrary {
   }
 
   addProject (project) {
+    project.id = this.idCounter;
     this.projects[this.idCounter] = { id: this.idCounter, project, items: [] };
     this.idCounter++;
   }
@@ -42,6 +43,18 @@ export class ProjectLibrary {
         }
       });
     }
+  }
+
+  selectProject(projectId) {
+    for (const projectsKey in this.projects) {
+      this.projects[projectsKey].project.selected = false;
+    }
+    this.projects[projectId].project.selected = true;
+  }
+
+  editProject(projectId, {name, color}) {
+    this.projects[projectId].project.name = name;
+    this.projects[projectId].project.color = color;
   }
 
 }

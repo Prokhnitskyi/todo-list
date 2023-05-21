@@ -3,5 +3,6 @@ import './styles/style.scss';
 import { UserInterfaceController } from './UserInterfaceController';
 
 const userInterface = new UserInterfaceController();
-userInterface.initNav();
+userInterface.initNavView();
+userInterface.initNavHandlers();
 
