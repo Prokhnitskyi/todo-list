@@ -67,9 +67,11 @@ export class UserInterfaceController {
     let items = this.library.projects[selectedId].items;
 
     items = items.filter(item => {
-      if (!completed && item.completed) return false; // hide completed unless checked
+      const hideCompleted = !completed && item.completed;
+      const hideByTag = this.tagFilterValue && !item.tags.includes(this.tagFilterValue);
+      if (hideCompleted || hideByTag) return false;
       if (flagged) return item.flag; // show only flagged if checked
-      if (this.tagFilterValue && !item.tags.includes(this.tagFilterValue)) return false
+
       return true;
     });
 
