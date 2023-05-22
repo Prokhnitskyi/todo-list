@@ -5,10 +5,6 @@ export class ProjectLibrary {
   idCounter = 0;
   projects = {};
 
-  constructor () {
-
-  }
-
   addDefaultProject () {
     const id = this.idCounter;
     const project = new Project(

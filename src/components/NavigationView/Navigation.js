@@ -4,8 +4,6 @@ export class NavigationView {
   projectList = document.querySelector('.projects__list');
   tags = document.querySelector('.filters__tags');
   filtersTagContainer = document.querySelector('.filters__tags-container');
-  constructor () {
-  }
 
   renderProjectsList(projectsNamesArray) {
     this.projectList.innerHTML = projectsNamesArray.map((project) => (

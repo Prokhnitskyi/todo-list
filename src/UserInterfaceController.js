@@ -24,10 +24,6 @@ export class UserInterfaceController {
   todosContainer = document.querySelector('.todos');
   filtersTagContainer = document.querySelector('.filters__tags-container');
 
-  constructor () {
-
-  }
-
   initNavView () {
     this.library.addDefaultProject();
     const projects = this.library.projects;
