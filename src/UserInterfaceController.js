@@ -55,7 +55,8 @@ export class UserInterfaceController {
       new TodoItem({ title: 'My new test', tags: ['test3'] }));
     // temp end
     this.navigation.renderProjectsList(getAllProjects(projects));
-    const tags = getAllTags(projects);
+    const selectedId = this.library.getSelectedProject();
+    const tags = getAllTags(this.library.projects[selectedId].items);
     this.navigation.renderTags(tags);
   }
 
@@ -218,14 +219,11 @@ export class UserInterfaceController {
 
 }
 
-function getAllTags (projects) {
+function getAllTags (todos) {
+  console.log(todos);
   const array = [];
-  for (const projectKey in projects) {
-    const itemsTags = [];
-    projects[projectKey].items.forEach((item) => {
-      itemsTags.push(...item.tags);
-    });
-    array.push(...itemsTags);
+  for (const todo of todos) {
+    array.push(...todo.tags);
   }
   return array;
 }
