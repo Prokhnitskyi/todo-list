@@ -75,6 +75,7 @@ export class UserInterfaceController {
 
     items.forEach(item => {
       const todo = this.todoTemplate.content.cloneNode(true);
+      todo.querySelector('.todo').dataset.uuid = item.uuid;
       todo.querySelector(
         '.todo').style.border = `2px solid ${this.library.projects[selectedId].project.color}`;
       todo.querySelector('.todo__title').textContent = item.title;
@@ -208,8 +209,17 @@ export class UserInterfaceController {
       this.renderTodoItems();
     }
 
+    const deleteTodoItem = (event) => {
+      const elem = event.target;
+      if (!elem.classList.contains('todo__delete')) return;
+      const uuid = elem.closest('.todo').dataset.uuid;
+      this.library.removeTodoItem(uuid);
+      this.renderTodoItems();
+    }
+
     this.addTodoItemBtn.addEventListener('click', showAddTodoModal);
     this.todosContainer.addEventListener('click', showTodoDetails);
+    this.todosContainer.addEventListener('click', deleteTodoItem);
     this.filtersTagContainer.addEventListener('click', filterByTags);
     this.completedFilter.addEventListener('change', filterByCompleted);
     this.flaggedFilter.addEventListener('change', filterByFlagged);
