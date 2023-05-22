@@ -6,6 +6,7 @@ import { Project } from './components/Project/Project';
 export class UserInterfaceController {
   library = new ProjectLibrary();
   navigation = new NavigationView();
+  tagFilterValue;
 
   projectList = document.querySelector('.projects__list');
   addProjectItemBtn = document.querySelector('.controls__add-project');
@@ -38,6 +39,8 @@ export class UserInterfaceController {
         URL: 'https://azaza.com',
         dueDate: new Date(),
         description: 'Text description',
+        completed: true,
+        flag: true
       }));
     this.library.addTodoItem('0',
       new TodoItem({ title: 'My new test', tags: ['test3'] }));
@@ -63,7 +66,18 @@ export class UserInterfaceController {
   renderTodoItems () {
     this.todosContainer.innerHTML = '';
     const selectedId = this.library.getSelectedProject();
-    this.library.projects[selectedId].items.forEach(item => {
+    const completed = this.completedFilter.checked;
+    const flagged = this.flaggedFilter.checked;
+    let items = this.library.projects[selectedId].items;
+
+    items = items.filter(item => {
+      if (!completed && item.completed) return false; // hide completed unless checked
+      if (flagged) return item.flag; // show only flagged if checked
+      if (this.tagFilterValue && !item.tags.includes(this.tagFilterValue)) return false
+      return true;
+    });
+
+    items.forEach(item => {
       const todo = this.todoTemplate.content.cloneNode(true);
       todo.querySelector(
         '.todo').style.border = `2px solid ${this.library.projects[selectedId].project.color}`;
@@ -87,6 +101,13 @@ export class UserInterfaceController {
       todo.querySelector('.todo__tags').innerHTML = item.tags.map(tag => (
         `<span class="todo__tag">${tag}</span>`
       )).join('');
+
+      if (item.completed) {
+        todo.querySelector('.todo__completed').classList.add('todo__completed--active');
+      }
+      if (item.flag) {
+        todo.querySelector('.todo__flag').classList.add('todo__flag--active');
+      }
 
       this.todosContainer.append(todo);
     });
@@ -166,15 +187,10 @@ export class UserInterfaceController {
       const element = event.target;
       if (!element.classList.contains('filters__tag')) return;
       const tagText = element.textContent;
-      this.renderTodoItems(); // undo previous filter action
-
-      if (!element.classList.contains('filters__tag--selected')) {
-        const todos = document.querySelectorAll('.todo');
-        todos.forEach((todo) => {
-          if (!todo.querySelector('.todo__tags').textContent.includes(tagText)) {
-            todo.remove();
-          }
-        });
+      if (element.classList.contains('filters__tag--selected')) {
+        this.tagFilterValue = '';
+      } else {
+        this.tagFilterValue = tagText;
       }
 
       const tagElements = this.filtersTagContainer.querySelectorAll('.filters__tag');
@@ -184,11 +200,23 @@ export class UserInterfaceController {
         }
       });
       element.classList.toggle('filters__tag--selected');
+
+      this.renderTodoItems();
     };
+
+    const filterByCompleted = (event) => {
+      this.renderTodoItems();
+    }
+
+    const filterByFlagged = () => {
+      this.renderTodoItems();
+    }
 
     this.addTodoItemBtn.addEventListener('click', showAddTodoModal);
     this.todosContainer.addEventListener('click', showTodoDetails);
     this.filtersTagContainer.addEventListener('click', filterByTags);
+    this.completedFilter.addEventListener('change', filterByCompleted);
+    this.flaggedFilter.addEventListener('change', filterByFlagged);
   }
 
   initModalHandlers () {
