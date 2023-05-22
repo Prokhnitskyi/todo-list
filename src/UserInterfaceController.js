@@ -104,6 +104,8 @@ export class UserInterfaceController {
         toggle('projects__select--active');
       element.classList.toggle('projects__select--active');
 
+      const tags = getAllTags(this.library.projects[selectedId].items);
+      this.navigation.renderTags(tags);
       this.renderTodoItems();
     };
 
