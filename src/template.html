@@ -197,5 +197,27 @@
         </form>
     </div>
 </dialog>
+<template id="todo-template">
+    <div class="todo">
+        <h3 class="todo__title"></h3> <!-- todo__title--active -->
+        <div class="todo__details"> <!-- todo__details--active -->
+            <div class="todo__controls">
+                <button type="button" class="todo__edit">edit</button>
+                <button type="button" class="todo__flag"></button>
+                <button type="button" class="todo__completed"></button>
+                <button type="button" class="todo__delete">delete</button>
+            </div>
+            <div class="todo__content">
+                <p class="todo__description"></p>
+                <div class="todo__url">URL: <a href="#" target="_blank"></a></div>
+                <div class="todo__due-date">Due date:
+                    <time datetime="2023-01-28"></time>
+                </div>
+                <div class="todo__priority"><strong>Priority:</strong> <span class="todo__priority-value"></span></div>
+                <div class="todo__tags"></div>
+            </div>
+        </div>
+    </div>
+</template>
 </body>
 </html>

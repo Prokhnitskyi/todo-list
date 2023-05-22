@@ -20,6 +20,8 @@ export class UserInterfaceController {
   projectColorInput = this.projectModalForm.querySelector('#set-project-color');
   todoModal = document.querySelector('#todo-modal');
   todoModalForm = this.todoModal.querySelector('.todo-modal__form');
+  todoTemplate = document.querySelector('#todo-template');
+  todosContainer = document.querySelector('.todos');
 
   constructor () {
 
@@ -30,7 +32,13 @@ export class UserInterfaceController {
     const projects = this.library.projects;
     // temp start
     this.library.addTodoItem('0',
-      new TodoItem({ title: 'My new test', tags: ['test1', 'test2'] }));
+      new TodoItem({
+        title: 'My new test',
+        tags: ['test1', 'test2'],
+        URL: 'https://azaza.com',
+        dueDate: new Date(),
+        description: 'Text description',
+      }));
     this.library.addTodoItem('0',
       new TodoItem({ title: 'My new test', tags: ['test3'] }));
     const testProject1 = new Project({ name: 'Project 1', color: '#b90a0a' });
@@ -38,13 +46,48 @@ export class UserInterfaceController {
     const testProject2 = new Project({ name: 'Project 2', color: '#003bfc' });
     this.library.addProject(testProject2);
     this.library.addTodoItem('1',
-      new TodoItem({ title: 'My new test', tags: ['test1', 'test2'] }));
+      new TodoItem({
+        title: 'My new test',
+        tags: ['test1', 'test2'],
+        URL: 'https://azaza.com',
+      }));
     this.library.addTodoItem('2',
       new TodoItem({ title: 'My new test', tags: ['test3'] }));
     // temp end
     this.navigation.renderProjectsList(getAllProjects(projects));
     const tags = getAllTags(projects);
     this.navigation.renderTags(tags);
+  }
+
+  renderTodoItems () {
+    this.todosContainer.innerHTML = '';
+    const selectedId = this.library.getSelectedProject();
+    this.library.projects[selectedId].items.forEach(item => {
+      const todo = this.todoTemplate.content.cloneNode(true);
+      todo.querySelector('.todo').style.border = `2px solid ${this.library.projects[selectedId].project.color}`;
+      todo.querySelector('.todo__title').textContent = item.title;
+      todo.querySelector('.todo__description').textContent = item.description;
+      todo.querySelector('.todo__priority-value').textContent = item.priority;
+      if (item.URL) {
+        todo.querySelector('.todo__url a').textContent = item.URL;
+        todo.querySelector('.todo__url a').href = item.URL;
+      } else {
+        todo.querySelector('.todo__url').remove();
+      }
+      if (item.dueDate) {
+        const time = item.dueDate.toLocaleString('sv').split(' ')[0];
+        todo.querySelector('.todo__due-date time').
+          setAttribute('datetime', time);
+        todo.querySelector('.todo__due-date time').textContent = time;
+      } else {
+        todo.querySelector('.todo__due-date').remove();
+      }
+      todo.querySelector('.todo__tags').innerHTML = item.tags.map(tag => (
+        `<span class="todo__tag">${tag}</span>`
+      )).join('');
+
+      this.todosContainer.append(todo);
+    });
   }
 
   initNavProjectHandlers () {
@@ -60,7 +103,7 @@ export class UserInterfaceController {
         toggle('projects__select--active');
       element.classList.toggle('projects__select--active');
 
-      //TODO: Render selected project items
+      this.renderTodoItems();
     };
 
     const showEditProject = (event) => {
@@ -100,12 +143,23 @@ export class UserInterfaceController {
 
   }
 
-  initNavTodoHandlers () {
+  initTodoHandlers () {
     const showAddTodoModal = () => {
       this.todoModalForm.reset();
       this.todoModal.showModal();
     };
+
+    const showTodoDetails = (event) => {
+      if (!event.target.classList.contains('todo__title')) return;
+      event.target.classList.toggle('todo__title--active');
+      event.target.closest('.todo').
+        querySelector('.todo__details').
+        classList.
+        toggle('todo__details--active');
+    };
+
     this.addTodoItemBtn.addEventListener('click', showAddTodoModal);
+    this.todosContainer.addEventListener('click', showTodoDetails);
   }
 
   initModalHandlers () {
@@ -126,17 +180,18 @@ export class UserInterfaceController {
 
       this.projectModalForm.reset();
       this.navigation.renderProjectsList(getAllProjects(this.library.projects));
-      //TODO: Render selected project items
+      this.renderTodoItems();
     };
 
-    const handleTodoModal = (event) => {
+    const handleAddTodoModal = (event) => {
       const inputs = this.todoModalForm.elements;
       const props = {
         title: inputs['set-title'].value,
-        ...(inputs['set-description'].value && {description: inputs['set-description'].value}),
-        ...(inputs['set-url'].value && {URL: inputs['set-url'].value}),
+        ...(inputs['set-description'].value &&
+          { description: inputs['set-description'].value }),
+        ...(inputs['set-url'].value && { URL: inputs['set-url'].value }),
         priority: inputs['set-priority'].value,
-        flag: inputs['set-flagged'].checked
+        flag: inputs['set-flagged'].checked,
       };
       const newItem = new TodoItem(props);
       if (inputs['set-due-date'].value) {
@@ -146,11 +201,19 @@ export class UserInterfaceController {
       tags.forEach(tag => newItem.addTag(tag));
       const selectedId = this.library.getSelectedProject();
       this.library.addTodoItem(selectedId, newItem);
-      //TODO: Render selected project items
+      this.renderTodoItems();
     };
 
     this.projectModalForm.addEventListener('submit', handleProjectModal);
-    this.todoModalForm.addEventListener('submit', handleTodoModal);
+    this.todoModalForm.addEventListener('submit', handleAddTodoModal);
+  }
+
+  init() {
+    this.initNavView();
+    this.initNavProjectHandlers();
+    this.initTodoHandlers();
+    this.initModalHandlers();
+    this.renderTodoItems();
   }
 
 }
