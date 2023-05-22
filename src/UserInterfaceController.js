@@ -2,7 +2,6 @@ import { ProjectLibrary } from './ProjectLibrary';
 import { NavigationView } from './components/NavigationView/Navigation';
 import { TodoItem } from './components/TodoItem/TodoItem';
 import { Project } from './components/Project/Project';
-import * as events from 'events';
 
 export class UserInterfaceController {
   library = new ProjectLibrary();
@@ -22,6 +21,7 @@ export class UserInterfaceController {
   todoModalForm = this.todoModal.querySelector('.todo-modal__form');
   todoTemplate = document.querySelector('#todo-template');
   todosContainer = document.querySelector('.todos');
+  filtersTagContainer = document.querySelector('.filters__tags-container');
 
   constructor () {
 
@@ -65,7 +65,8 @@ export class UserInterfaceController {
     const selectedId = this.library.getSelectedProject();
     this.library.projects[selectedId].items.forEach(item => {
       const todo = this.todoTemplate.content.cloneNode(true);
-      todo.querySelector('.todo').style.border = `2px solid ${this.library.projects[selectedId].project.color}`;
+      todo.querySelector(
+        '.todo').style.border = `2px solid ${this.library.projects[selectedId].project.color}`;
       todo.querySelector('.todo__title').textContent = item.title;
       todo.querySelector('.todo__description').textContent = item.description;
       todo.querySelector('.todo__priority-value').textContent = item.priority;
@@ -161,8 +162,33 @@ export class UserInterfaceController {
         toggle('todo__details--active');
     };
 
+    const filterByTags = (event) => {
+      const element = event.target;
+      if (!element.classList.contains('filters__tag')) return;
+      const tagText = element.textContent;
+      this.renderTodoItems(); // undo previous filter action
+
+      if (!element.classList.contains('filters__tag--selected')) {
+        const todos = document.querySelectorAll('.todo');
+        todos.forEach((todo) => {
+          if (!todo.querySelector('.todo__tags').textContent.includes(tagText)) {
+            todo.remove();
+          }
+        });
+      }
+
+      const tagElements = this.filtersTagContainer.querySelectorAll('.filters__tag');
+      tagElements.forEach(tag => {
+        if(!tag.isEqualNode(element)) {
+          tag.classList.remove('filters__tag--selected');
+        }
+      });
+      element.classList.toggle('filters__tag--selected');
+    };
+
     this.addTodoItemBtn.addEventListener('click', showAddTodoModal);
     this.todosContainer.addEventListener('click', showTodoDetails);
+    this.filtersTagContainer.addEventListener('click', filterByTags);
   }
 
   initModalHandlers () {
@@ -186,7 +212,7 @@ export class UserInterfaceController {
       this.renderTodoItems();
     };
 
-    const handleAddTodoModal = (event) => {
+    const handleAddTodoModal = () => {
       const inputs = this.todoModalForm.elements;
       const props = {
         title: inputs['set-title'].value,
@@ -211,7 +237,7 @@ export class UserInterfaceController {
     this.todoModalForm.addEventListener('submit', handleAddTodoModal);
   }
 
-  init() {
+  init () {
     this.initNavView();
     this.initNavProjectHandlers();
     this.initTodoHandlers();
@@ -222,7 +248,6 @@ export class UserInterfaceController {
 }
 
 function getAllTags (todos) {
-  console.log(todos);
   const array = [];
   for (const todo of todos) {
     array.push(...todo.tags);

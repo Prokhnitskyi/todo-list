@@ -78,6 +78,7 @@
 
   &__tag {
     @include tag;
+    cursor: pointer;
   }
 
   &__state {
