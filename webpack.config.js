@@ -57,6 +57,7 @@ module.exports = {
       title: 'Restaurant Page',
       filename: 'index.html',
       template: 'src/template.html',
+      favicon: 'src/assets/todo_favicon.png',
     })
   ],
 };
