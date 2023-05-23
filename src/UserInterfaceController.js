@@ -27,32 +27,6 @@ export class UserInterfaceController {
   initNavView () {
     this.library.addDefaultProject();
     const projects = this.library.projects;
-    // temp start
-    this.library.addTodoItem('0',
-      new TodoItem({
-        title: 'My new test',
-        tags: ['test1', 'test2'],
-        URL: 'https://azaza.com',
-        dueDate: new Date(),
-        description: 'Text description',
-        completed: true,
-        flag: true
-      }));
-    this.library.addTodoItem('0',
-      new TodoItem({ title: 'My new test', tags: ['test3'] }));
-    const testProject1 = new Project({ name: 'Project 1', color: '#b90a0a' });
-    this.library.addProject(testProject1);
-    const testProject2 = new Project({ name: 'Project 2', color: '#003bfc' });
-    this.library.addProject(testProject2);
-    this.library.addTodoItem('1',
-      new TodoItem({
-        title: 'My new test',
-        tags: ['test1', 'test2'],
-        URL: 'https://azaza.com',
-      }));
-    this.library.addTodoItem('2',
-      new TodoItem({ title: 'My new test', tags: ['test3'] }));
-    // temp end
     this.navigation.renderProjectsList(getAllProjects(projects));
     this.updateTags();
   }

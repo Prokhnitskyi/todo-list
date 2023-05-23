@@ -8,8 +8,21 @@ export class ProjectLibrary {
   addDefaultProject () {
     const id = this.idCounter;
     const project = new Project(
-      { id: this.idCounter, name: 'Default project', color: 'black', selected: true });
-    const item = new TodoItem({ title: 'My new item', tags: ['my_tag'], flag: true });
+      {
+        id: this.idCounter,
+        name: 'Default project',
+        color: 'black',
+        selected: true,
+      });
+    const item = new TodoItem({
+      title: 'Click this title to expand',
+      description: 'This is a description',
+      priority: 'High',
+      URL: 'https://google.com',
+      tags: ['tag_example'],
+      flag: true
+    });
+    item.setDueDate('2025-12-12');
     this.projects[this.idCounter] = { id, project, items: [item] };
     this.idCounter++;
   }
