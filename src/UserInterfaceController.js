@@ -54,25 +54,13 @@ export class UserInterfaceController {
       new TodoItem({ title: 'My new test', tags: ['test3'] }));
     // temp end
     this.navigation.renderProjectsList(getAllProjects(projects));
-    const selectedId = this.library.getSelectedProject();
-    const tags = getAllTags(this.library.projects[selectedId].items);
-    this.navigation.renderTags(tags);
+    this.updateTags();
   }
 
   renderTodoItems () {
     this.todosContainer.innerHTML = '';
     const selectedId = this.library.getSelectedProject();
-    const completed = this.completedFilter.checked;
-    const flagged = this.flaggedFilter.checked;
-    let items = this.library.projects[selectedId].items;
-
-    items = items.filter(item => {
-      const hideCompleted = !completed && item.completed;
-      const hideByTag = this.tagFilterValue && !item.tags.includes(this.tagFilterValue);
-      if (hideCompleted || hideByTag) return false;
-      if (flagged) return item.flag; // show only flagged if checked
-      return true;
-    });
+    const items = this.#filterTodos(this.library.projects[selectedId].items);
 
     const color = this.library.projects[selectedId].project.color;
     items.forEach(item => {
@@ -83,6 +71,7 @@ export class UserInterfaceController {
       });
       this.todosContainer.append(todo);
     });
+    this.updateTags();
   }
 
   initNavProjectHandlers () {
@@ -98,8 +87,7 @@ export class UserInterfaceController {
         toggle('projects__select--active');
       element.classList.toggle('projects__select--active');
 
-      const tags = getAllTags(this.library.projects[selectedId].items);
-      this.navigation.renderTags(tags);
+      this.updateTags();
       this.renderTodoItems();
     };
 
@@ -292,12 +280,31 @@ export class UserInterfaceController {
         this.library.editTodoItem(uuid, newItem);
       }
       this.renderTodoItems();
-      const navTags = getAllTags(this.library.projects[selectedId].items);
-      this.navigation.renderTags(navTags);
+      this.updateTags();
     };
 
     this.projectModalForm.addEventListener('submit', handleProjectModal);
     this.todoModalForm.addEventListener('submit', handleTodoModal);
+  }
+
+  updateTags() {
+    const selectedId = this.library.getSelectedProject();
+    const items = this.library.projects[selectedId].items;
+    const tags = getAllTags(this.#filterTodos(items));
+    this.navigation.renderTags(tags);
+  }
+
+  #filterTodos(todos) {
+    const completed = this.completedFilter.checked;
+    const flagged = this.flaggedFilter.checked;
+
+    return todos.filter(item => {
+      const hideCompleted = !completed && item.completed;
+      const hideByTag = this.tagFilterValue && !item.tags.includes(this.tagFilterValue);
+      if (hideCompleted || hideByTag) return false;
+      if (flagged) return item.flag; // show only flagged if checked
+      return true;
+    });
   }
 
   init () {
