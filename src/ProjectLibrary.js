@@ -41,6 +41,37 @@ export class ProjectLibrary {
     }
   }
 
+  editTodoItem (uuid, replacementItem) {
+    for (const projectsKey in this.projects) {
+      this.projects[projectsKey].items.forEach((item, index, array) => {
+        if (item.uuid === uuid) {
+          replacementItem.uuid = item.uuid;
+          array[index] = replacementItem;
+        }
+      });
+    }
+  }
+
+  flagTodoItem (uuid) {
+    this.getTodoItem(uuid).switchFlag();
+  }
+
+  completeTodoItem (uuid) {
+    this.getTodoItem(uuid).switchCompletion();
+  }
+
+  getTodoItem(uuid) {
+    let todo;
+    for (const projectsKey in this.projects) {
+      this.projects[projectsKey].items.forEach((item) => {
+        if (item.uuid === uuid) {
+          todo = item
+        }
+      });
+    }
+    return todo;
+  }
+
   selectProject(projectId) {
     for (const projectsKey in this.projects) {
       this.projects[projectsKey].project.selected = false;

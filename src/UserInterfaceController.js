@@ -142,6 +142,7 @@ export class UserInterfaceController {
 
   initTodoHandlers () {
     const showAddTodoModal = () => {
+      this.todoModalForm.dataset.uuid = '';
       this.todoModalForm.reset();
       this.todoModal.showModal();
     };
@@ -176,7 +177,7 @@ export class UserInterfaceController {
       this.renderTodoItems();
     };
 
-    const filterByCompleted = (event) => {
+    const filterByCompleted = () => {
       this.renderTodoItems();
     }
 
@@ -192,9 +193,55 @@ export class UserInterfaceController {
       this.renderTodoItems();
     }
 
+    const flagTodoItem = (event) => {
+      const elem = event.target;
+      if (!elem.classList.contains('todo__flag')) return;
+      const todo = elem.closest('.todo');
+      const uuid = todo.dataset.uuid;
+      this.library.flagTodoItem(uuid);
+      todo.querySelector('.todo__flag').classList.toggle('todo__flag--active');
+    }
+
+    const completeTodoItem = (event) => {
+      const elem = event.target;
+      if (!elem.classList.contains('todo__completed')) return;
+      const todo = elem.closest('.todo');
+      const uuid = todo.dataset.uuid;
+      this.library.completeTodoItem(uuid);
+      todo.querySelector('.todo__completed').classList.toggle('todo__completed--active');
+    }
+
+    const showEditTodoModal = (event) => {
+      const elem = event.target;
+      if (!elem.classList.contains('todo__edit')) return;
+      const uuid = elem.closest('.todo').dataset.uuid;
+      this.todoModalForm.dataset.uuid = uuid;
+      const {
+        title,
+        description,
+        URL,
+        dueDate,
+        priority,
+        flag,
+        tags,
+      } = this.library.getTodoItem(uuid);
+      const inputs = this.todoModalForm.elements;
+      title && (inputs['set-title'].value = title);
+      description && (inputs['set-description'].value = description);
+      dueDate && (inputs['set-due-date'].value = dueDate.toISOString().split('T')[0]);
+      URL && (inputs['set-url'].value = URL);
+      priority && (inputs['set-priority'].value = priority);
+      inputs['set-flagged'].checked = flag;
+      inputs['set-tags'].value = tags.join(', ');
+      this.todoModal.showModal();
+    };
+
     this.addTodoItemBtn.addEventListener('click', showAddTodoModal);
     this.todosContainer.addEventListener('click', showTodoDetails);
     this.todosContainer.addEventListener('click', deleteTodoItem);
+    this.todosContainer.addEventListener('click', flagTodoItem);
+    this.todosContainer.addEventListener('click', completeTodoItem);
+    this.todosContainer.addEventListener('click', showEditTodoModal);
     this.filtersTagContainer.addEventListener('click', filterByTags);
     this.completedFilter.addEventListener('change', filterByCompleted);
     this.flaggedFilter.addEventListener('change', filterByFlagged);
@@ -221,7 +268,8 @@ export class UserInterfaceController {
       this.renderTodoItems();
     };
 
-    const handleAddTodoModal = () => {
+    const handleTodoModal = () => {
+      const uuid = this.todoModalForm.dataset.uuid;
       const inputs = this.todoModalForm.elements;
       const props = {
         title: inputs['set-title'].value,
@@ -238,12 +286,18 @@ export class UserInterfaceController {
       const tags = parseTags(inputs['set-tags'].value);
       tags.forEach(tag => newItem.addTag(tag));
       const selectedId = this.library.getSelectedProject();
-      this.library.addTodoItem(selectedId, newItem);
+      if (!uuid) {
+        this.library.addTodoItem(selectedId, newItem);
+      } else {
+        this.library.editTodoItem(uuid, newItem);
+      }
       this.renderTodoItems();
+      const navTags = getAllTags(this.library.projects[selectedId].items);
+      this.navigation.renderTags(navTags);
     };
 
     this.projectModalForm.addEventListener('submit', handleProjectModal);
-    this.todoModalForm.addEventListener('submit', handleAddTodoModal);
+    this.todoModalForm.addEventListener('submit', handleTodoModal);
   }
 
   init () {
