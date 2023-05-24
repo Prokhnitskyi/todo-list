@@ -2,8 +2,8 @@ import { Project } from './components/Project/Project';
 import { TodoItem } from './components/TodoItem/TodoItem';
 
 export class ProjectLibrary {
-  idCounter = 0;
-  projects = {};
+  idCounter = this.#loadLibrary().idCounter || 0;
+  projects = this.#loadLibrary().projects || {};
 
   addDefaultProject () {
     const id = this.idCounter;
@@ -11,7 +11,6 @@ export class ProjectLibrary {
       {
         id: this.idCounter,
         name: 'Default project',
-        color: 'black',
         selected: true,
       });
     const item = new TodoItem({
@@ -22,7 +21,7 @@ export class ProjectLibrary {
       tags: ['tag_example'],
       flag: true
     });
-    item.setDueDate('2025-12-12');
+    item.dueDate ='2025-12-31';
     this.projects[this.idCounter] = { id, project, items: [item] };
     this.idCounter++;
   }
@@ -31,16 +30,19 @@ export class ProjectLibrary {
     project.id = this.idCounter;
     this.projects[this.idCounter] = { id: this.idCounter, project, items: [] };
     this.idCounter++;
+    this.#saveLibrary();
   }
 
   removeProject (projectId) {
     delete this.projects[projectId];
+    this.#saveLibrary();
   }
 
   addTodoItem (projectId, todoItem) {
     if (this.projects.hasOwnProperty(projectId)) {
       this.projects[projectId].items.unshift(todoItem);
     }
+    this.#saveLibrary();
   }
 
   removeTodoItem (uuid) {
@@ -52,6 +54,7 @@ export class ProjectLibrary {
         }
       });
     }
+    this.#saveLibrary();
   }
 
   editTodoItem (uuid, replacementItem) {
@@ -63,14 +66,17 @@ export class ProjectLibrary {
         }
       });
     }
+    this.#saveLibrary();
   }
 
   flagTodoItem (uuid) {
     this.getTodoItem(uuid).switchFlag();
+    this.#saveLibrary();
   }
 
   completeTodoItem (uuid) {
     this.getTodoItem(uuid).switchCompletion();
+    this.#saveLibrary();
   }
 
   getTodoItem(uuid) {
@@ -90,6 +96,7 @@ export class ProjectLibrary {
       this.projects[projectsKey].project.selected = false;
     }
     this.projects[projectId].project.selected = true;
+    this.#saveLibrary();
   }
 
   getSelectedProject() {
@@ -104,6 +111,28 @@ export class ProjectLibrary {
   editProject(projectId, {name, color}) {
     this.projects[projectId].project.name = name;
     this.projects[projectId].project.color = color;
+    this.#saveLibrary();
+  }
+
+  #saveLibrary() {
+    localStorage.setItem('projects', JSON.stringify(this.projects));
+    localStorage.setItem('idCounter', this.idCounter.toString());
+  }
+
+  #loadLibrary () {
+    const projects = JSON.parse(localStorage.getItem('projects'));
+    const idCounter = parseInt(localStorage.getItem('idCounter'));
+
+    for (const projectsKey in projects) {
+      Object.setPrototypeOf(projects[projectsKey].project, Project.prototype);
+      projects[projectsKey].items = projects[projectsKey].items.map((plainItem) => {
+        const item = new TodoItem(plainItem);
+        item.dueDate = plainItem.savedDueDate;
+        return item;
+      });
+    }
+
+    return { projects, idCounter };
   }
 
 }

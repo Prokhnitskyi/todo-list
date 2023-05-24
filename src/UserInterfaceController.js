@@ -30,7 +30,9 @@ export class UserInterfaceController {
   contentContainer = document.querySelector('.content');
 
   initNavView () {
-    this.library.addDefaultProject();
+    if (!localStorage.getItem('projects')) {
+      this.library.addDefaultProject();
+    }
     const projects = this.library.projects;
     this.navigation.renderProjectsList(getAllProjects(projects));
     this.updateTags();
@@ -226,7 +228,7 @@ export class UserInterfaceController {
       const inputs = this.todoModalForm.elements;
       title && (inputs['set-title'].value = title);
       description && (inputs['set-description'].value = description);
-      dueDate && (inputs['set-due-date'].value = dueDate.toISOString().split('T')[0]);
+      dueDate && (inputs['set-due-date'].value = dueDate);
       URL && (inputs['set-url'].value = URL);
       priority && (inputs['set-priority'].value = priority);
       inputs['set-flagged'].checked = flag;
@@ -279,7 +281,7 @@ export class UserInterfaceController {
       };
       const newItem = new TodoItem(props);
       if (inputs['set-due-date'].value) {
-        newItem.setDueDate(inputs['set-due-date'].value);
+        newItem.dueDate = inputs['set-due-date'].value;
       }
       const tags = parseTags(inputs['set-tags'].value);
       tags.forEach(tag => newItem.addTag(tag));
@@ -368,10 +370,10 @@ function buildTodoElement({item, blueprint, color}) {
     todo.querySelector('.todo__url').remove();
   }
   if (item.dueDate) {
-    const time = item.dueDate.toLocaleString('sv').split(' ')[0];
+    const time = item.dueDate;
     todo.querySelector('.todo__due-date time').
       setAttribute('datetime', time);
-    todo.querySelector('.todo__due-date time').textContent = time;
+    todo.querySelector('.todo__due-date time').textContent = `${time} UTC`;
   } else {
     todo.querySelector('.todo__due-date').remove();
   }
