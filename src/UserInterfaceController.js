@@ -28,6 +28,7 @@ export class UserInterfaceController {
   mainContainer = document.querySelector('.container');
   nav = document.querySelector('.navigation');
   contentContainer = document.querySelector('.content');
+  switchTodosBtn = document.querySelector('.controls__switch-item-view');
 
   initNavView () {
     if (!localStorage.getItem('projects')) {
@@ -54,7 +55,7 @@ export class UserInterfaceController {
       this.nav.classList.toggle('navigation--hidden');
     }
 
-    const hideMenu = (event) => {
+    const hideMenu = () => {
       if (mediaQuery.matches) {
         this.mainContainer.classList.add('container--menu-hidden');
         this.nav.classList.add('navigation--hidden');
@@ -147,7 +148,7 @@ export class UserInterfaceController {
       this.todoModal.showModal();
     };
 
-    const showTodoDetails = (event) => {
+    const toogleTodoDetails = (event) => {
       if (!event.target.classList.contains('todo__title')) return;
       event.target.classList.toggle('todo__title--active');
       event.target.closest('.todo').
@@ -236,8 +237,16 @@ export class UserInterfaceController {
       this.todoModal.showModal();
     };
 
+    const switchTodoViews = () => {
+      const todos = document.querySelectorAll('.todo');
+      todos.forEach((todo) => {
+        todo.querySelector('.todo__title').classList.toggle('todo__title--active');
+        todo.querySelector('.todo__details').classList.toggle('todo__details--active');
+      });
+    }
+
     this.addTodoItemBtn.addEventListener('click', showAddTodoModal);
-    this.todosContainer.addEventListener('click', showTodoDetails);
+    this.todosContainer.addEventListener('click', toogleTodoDetails);
     this.todosContainer.addEventListener('click', deleteTodoItem);
     this.todosContainer.addEventListener('click', flagTodoItem);
     this.todosContainer.addEventListener('click', completeTodoItem);
@@ -245,6 +254,7 @@ export class UserInterfaceController {
     this.filtersTagContainer.addEventListener('click', filterByTags);
     this.completedFilter.addEventListener('change', filterByCompleted);
     this.flaggedFilter.addEventListener('change', filterByFlagged);
+    this.switchTodosBtn.addEventListener('click', switchTodoViews);
   }
 
   initModalHandlers () {
