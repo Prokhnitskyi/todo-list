@@ -23,12 +23,48 @@ export class UserInterfaceController {
   todoTemplate = document.querySelector('#todo-template');
   todosContainer = document.querySelector('.todos');
   filtersTagContainer = document.querySelector('.filters__tags-container');
+  navBtn = document.querySelector('.navigation__menu');
+  headerNavBtn = document.querySelector('.header__menu');
+  mainContainer = document.querySelector('.container');
+  nav = document.querySelector('.navigation');
+  contentContainer = document.querySelector('.content');
 
   initNavView () {
     this.library.addDefaultProject();
     const projects = this.library.projects;
     this.navigation.renderProjectsList(getAllProjects(projects));
     this.updateTags();
+  }
+
+  initHamburgerMenuHandlers() {
+    const switchNavOnMedia = (mediaQuery) => {
+      if (mediaQuery.matches) {
+        this.mainContainer.classList.add('container--menu-hidden');
+        this.nav.classList.add('navigation--hidden');
+      } else {
+        this.mainContainer.classList.remove('container--menu-hidden');
+        this.nav.classList.remove('navigation--hidden');
+      }
+    }
+
+    const switchNavigation = () => {
+      this.mainContainer.classList.toggle('container--menu-hidden');
+      this.nav.classList.toggle('navigation--hidden');
+    }
+
+    const hideMenu = (event) => {
+      if (mediaQuery.matches) {
+        this.mainContainer.classList.add('container--menu-hidden');
+        this.nav.classList.add('navigation--hidden');
+      }
+    }
+
+    const mediaQuery = window.matchMedia('(max-width: 700px)');
+    switchNavOnMedia(mediaQuery);
+    mediaQuery.addEventListener('change', switchNavOnMedia);
+    this.navBtn.addEventListener('click', switchNavigation);
+    this.headerNavBtn.addEventListener('click', switchNavigation);
+    this.contentContainer.addEventListener('click', hideMenu);
   }
 
   renderTodoItems () {
@@ -283,6 +319,7 @@ export class UserInterfaceController {
 
   init () {
     this.initNavView();
+    this.initHamburgerMenuHandlers();
     this.initNavProjectHandlers();
     this.initTodoHandlers();
     this.initModalHandlers();

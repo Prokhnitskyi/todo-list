@@ -5,6 +5,24 @@
   background-color: $color-2;
   grid-area: nav;
   padding: 1rem;
+
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  width: 30vw;
+
+  &__menu {
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+
+  @media screen and (max-width: 700px) {
+    width: clamp(280px, 80vw, 420px);
+  }
+
+  &--hidden {
+    left: -100%;
+  }
 }
 
 .projects {

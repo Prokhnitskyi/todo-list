@@ -8,39 +8,41 @@
     <title>TODO List</title>
 </head>
 <body>
+<nav class="navigation">
+    <h2 class="navigation__menu"><?xml version="1.0" ?><svg height="12px" version="1.1" viewBox="0 0 18 12" width="18px" xmlns="http://www.w3.org/2000/svg"><title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#000000" id="Core" transform="translate(-87.000000, -342.000000)"><g id="menu" transform="translate(87.000000, 342.000000)"><path d="M0,12 L18,12 L18,10 L0,10 L0,12 L0,12 Z M0,7 L18,7 L18,5 L0,5 L0,7 L0,7 Z M0,0 L0,2 L18,2 L18,0 L0,0 L0,0 Z" id="Shape"/></g></g></g></svg></h2>
+    <div class="projects">
+        <h2>Projects:</h2>
+        <ul class="projects__list"></ul>
+    </div>
+    <div class="controls">
+        <h2>Controls:</h2>
+        <button class="controls__add-project button">Add project</button>
+        <button class="controls__add-item button">Add ToDo item</button>
+    </div>
+    <div class="filters">
+        <div class="filters__state">
+            <h2>States:</h2>
+            <div class="input-wrapper">
+                <input type="checkbox" name="completed" id="completed">
+                <label for="completed">Show completed</label>
+            </div>
+            <div class="input-wrapper">
+                <input type="checkbox" name="flagged" id="flagged">
+                <label for="flagged">Show only flagged</label>
+            </div>
+        </div>
+        <div class="filters__tags">
+            <h2>Tags:</h2>
+            <div class="filters__tags-container">
+            </div>
+        </div>
+    </div>
+</nav>
 <div class="container">
     <header class="header">
+        <h2 class="header__menu"><?xml version="1.0" ?><svg height="12px" version="1.1" viewBox="0 0 18 12" width="18px" xmlns="http://www.w3.org/2000/svg"><title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#FFFFFF" id="Core" transform="translate(-87.000000, -342.000000)"><g id="menu" transform="translate(87.000000, 342.000000)"><path d="M0,12 L18,12 L18,10 L0,10 L0,12 L0,12 Z M0,7 L18,7 L18,5 L0,5 L0,7 L0,7 Z M0,0 L0,2 L18,2 L18,0 L0,0 L0,0 Z" id="Shape"/></g></g></g></svg></h2>
         <h1 class="header__title">TODO List</h1>
     </header>
-    <nav class="navigation">
-        <div class="projects">
-            <h2>Projects:</h2>
-            <ul class="projects__list"></ul>
-        </div>
-        <div class="controls">
-            <h2>Controls:</h2>
-            <button class="controls__add-project button">Add project</button>
-            <button class="controls__add-item button">Add ToDo item</button>
-        </div>
-        <div class="filters">
-            <div class="filters__state">
-                <h2>States:</h2>
-                <div class="input-wrapper">
-                    <input type="checkbox" name="completed" id="completed">
-                    <label for="completed">Show completed</label>
-                </div>
-                <div class="input-wrapper">
-                    <input type="checkbox" name="flagged" id="flagged">
-                    <label for="flagged">Show only flagged</label>
-                </div>
-            </div>
-            <div class="filters__tags">
-                <h2>Tags:</h2>
-                <div class="filters__tags-container">
-                </div>
-            </div>
-        </div>
-    </nav>
     <main class="content">
         <div class="todos"></div>
     </main>
