@@ -121,7 +121,7 @@ export class ProjectLibrary {
   }
 
   getAllProjectTodos(projectId) {
-    return this.projects[projectId].items;
+    return projectId ? this.projects[projectId].items : [];
   }
 
   editProject(projectId, {name, color}) {
@@ -131,13 +131,16 @@ export class ProjectLibrary {
   }
 
   #saveLibrary() {
+    if (Object.keys(this.projects).length === 0) {
+      localStorage.clear();
+      return;
+    }
+
     localStorage.setItem('projects', JSON.stringify(this.projects));
-    localStorage.setItem('idCounter', this.idCounter.toString());
   }
 
   #loadLibrary () {
     const projects = JSON.parse(localStorage.getItem('projects'));
-    const idCounter = parseInt(localStorage.getItem('idCounter'));
 
     for (const projectsKey in projects) {
       Object.setPrototypeOf(projects[projectsKey].project, Project.prototype);
@@ -149,7 +152,11 @@ export class ProjectLibrary {
         return item;
       });
     }
-
+    let idCounter = 0;
+    if (projects) {
+      idCounter = parseInt(Object.keys(projects).at(-1)) + 1;
+    }
+    console.log(idCounter);
     return { projects, idCounter };
   }
 

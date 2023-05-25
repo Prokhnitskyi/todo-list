@@ -74,6 +74,10 @@ export class UserInterfaceController {
   renderTodoItems () {
     this.todosContainer.innerHTML = '';
     const selectedId = this.library.getSelectedProject();
+    if (!selectedId) { // if user deleted selected or last project
+      this.todosContainer.innerHTML = '';
+      return;
+    }
     const items = this.#filterTodos(this.library.getAllProjectTodos(selectedId));
 
     const color = this.library.getProjectColor(selectedId);
@@ -96,7 +100,7 @@ export class UserInterfaceController {
       if (element.classList.contains('projects__select--active')) return;
       const selectedId = element.dataset.projectId;
       this.library.selectProject(selectedId);
-      document.querySelector('.projects__select--active').
+      document.querySelector('.projects__select--active')?.
         classList.
         toggle('projects__select--active');
       element.classList.toggle('projects__select--active');
@@ -125,6 +129,7 @@ export class UserInterfaceController {
     const deleteProject = () => {
       this.library.removeProject(this.projectModalForm.dataset.projectId);
       this.navigation.renderProjectsList(this.library.getProjectsArray());
+      this.renderTodoItems();
       this.projectModal.close();
     };
 
