@@ -32,8 +32,8 @@ h2 {
 }
 
 .container {
-  left: 30vw;
-  width: 70vw;
+  left: 280px;
+  width: calc(100% - 280px);
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
