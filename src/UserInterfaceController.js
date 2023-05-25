@@ -149,7 +149,7 @@ export class UserInterfaceController {
       this.todoModal.showModal();
     };
 
-    const toogleTodoDetails = (event) => {
+    const toggleTodoDetails = (event) => {
       if (!event.target.classList.contains('todo__title')) return;
       event.target.classList.toggle('todo__title--active');
       event.target.closest('.todo').
@@ -247,7 +247,7 @@ export class UserInterfaceController {
     }
 
     this.addTodoItemBtn.addEventListener('click', showAddTodoModal);
-    this.todosContainer.addEventListener('click', toogleTodoDetails);
+    this.todosContainer.addEventListener('click', toggleTodoDetails);
     this.todosContainer.addEventListener('click', deleteTodoItem);
     this.todosContainer.addEventListener('click', flagTodoItem);
     this.todosContainer.addEventListener('click', completeTodoItem);
@@ -313,17 +313,17 @@ export class UserInterfaceController {
   updateTags() {
     const selectedId = this.library.getSelectedProject();
     const items = this.library.getAllProjectTodos(selectedId);
-    const tags = this.#getAllTags(this.#filterTodos(items));
-    this.navigation.renderTags(tags);
+    const tags = this.#getAllTags(this.#filterTodos(items, false));
+    this.navigation.renderTags(tags, this.tagFilterValue);
   }
 
-  #filterTodos(todos) {
+  #filterTodos(todos, filterByTags = true) {
     const completed = this.completedFilter.checked;
     const flagged = this.flaggedFilter.checked;
 
     return todos.filter(item => {
       const hideCompleted = !completed && item.completed;
-      const hideByTag = this.tagFilterValue && !item.tags.includes(this.tagFilterValue);
+      const hideByTag = filterByTags && this.tagFilterValue && !item.tags.includes(this.tagFilterValue);
       if (hideCompleted || hideByTag) return false;
       if (flagged) return item.flag; // show only flagged if checked
       return true;

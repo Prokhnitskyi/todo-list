@@ -25,7 +25,7 @@ export class NavigationView {
     )).join('');
   }
 
-  renderTags(tagsList) {
+  renderTags(tagsList, selected = null) {
     if (tagsList.length === 0) {
       this.tags.style.display = 'none';
     } else {
@@ -33,7 +33,7 @@ export class NavigationView {
     }
 
     this.filtersTagContainer.innerHTML = tagsList.map((tag) => (
-      `<span class="filters__tag">${tag}</span>`
+      `<span class="filters__tag ${tag === selected ? 'filters__tag--selected' : ''}">${tag}</span>`
     )).join('');
   }
 }
