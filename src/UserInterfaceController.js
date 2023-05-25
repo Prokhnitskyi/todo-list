@@ -75,7 +75,7 @@ export class UserInterfaceController {
     const selectedId = this.library.getSelectedProject();
     const items = this.#filterTodos(this.library.getAllProjectTodos(selectedId));
 
-    const color = this.library.projects[selectedId].project.color;
+    const color = this.library.getProjectColor(selectedId);
     items.forEach(item => {
       const todo = buildTodoElement({
         item,
@@ -270,7 +270,7 @@ export class UserInterfaceController {
       } else {
         const newProject = new Project(props);
         this.library.addProject(newProject);
-        this.library.selectProject(this.library.idCounter - 1);
+        this.library.selectProject();
       }
 
       this.projectModalForm.reset();

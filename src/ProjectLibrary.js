@@ -38,7 +38,7 @@ export class ProjectLibrary {
     this.#saveLibrary();
   }
 
-  selectProject(projectId) {
+  selectProject(projectId = this.idCounter - 1) {
     for (const projectsKey in this.projects) {
       this.projects[projectsKey].project.selected = false;
     }
@@ -53,6 +53,10 @@ export class ProjectLibrary {
         break;
       }
     }
+  }
+
+  getProjectColor(projectId) {
+    return this.projects[projectId].project.color;
   }
 
   getProjectsArray () {
@@ -139,7 +143,9 @@ export class ProjectLibrary {
       Object.setPrototypeOf(projects[projectsKey].project, Project.prototype);
       projects[projectsKey].items = projects[projectsKey].items.map((plainItem) => {
         const item = new TodoItem(plainItem);
-        item.dueDate = plainItem.savedDueDate;
+        if (plainItem.savedDueDate) {
+          item.dueDate = plainItem.savedDueDate;
+        }
         return item;
       });
     }
