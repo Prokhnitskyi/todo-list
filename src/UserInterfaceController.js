@@ -34,8 +34,8 @@ export class UserInterfaceController {
     if (!localStorage.getItem('projects')) {
       this.library.addDefaultProject();
     }
-    const projects = this.library.projects;
-    this.navigation.renderProjectsList(getAllProjects(projects));
+
+    this.navigation.renderProjectsList(this.library.getProjectsArray());
     this.updateTags();
   }
 
@@ -123,7 +123,7 @@ export class UserInterfaceController {
 
     const deleteProject = () => {
       this.library.removeProject(this.projectModalForm.dataset.projectId);
-      this.navigation.renderProjectsList(getAllProjects(this.library.projects));
+      this.navigation.renderProjectsList(this.library.getProjectsArray());
       this.projectModal.close();
     };
 
@@ -274,7 +274,7 @@ export class UserInterfaceController {
       }
 
       this.projectModalForm.reset();
-      this.navigation.renderProjectsList(getAllProjects(this.library.projects));
+      this.navigation.renderProjectsList(this.library.getProjectsArray());
       this.renderTodoItems();
     };
 
@@ -353,14 +353,6 @@ function parseTags (tagsString) {
   const array = formattedSting.split(',');
   for (let i = 0; i < array.length; i++) {
     array[i] = array[i].trim();
-  }
-  return array;
-}
-
-function getAllProjects (projects) {
-  const array = [];
-  for (const projectKey in projects) {
-    array.push(projects[projectKey].project);
   }
   return array;
 }

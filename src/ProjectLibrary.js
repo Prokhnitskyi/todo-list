@@ -38,6 +38,31 @@ export class ProjectLibrary {
     this.#saveLibrary();
   }
 
+  selectProject(projectId) {
+    for (const projectsKey in this.projects) {
+      this.projects[projectsKey].project.selected = false;
+    }
+    this.projects[projectId].project.selected = true;
+    this.#saveLibrary();
+  }
+
+  getSelectedProject() {
+    for (const projectsKey in this.projects) {
+      if (this.projects[projectsKey].project.selected) {
+        return projectsKey;
+        break;
+      }
+    }
+  }
+
+  getProjectsArray () {
+    const array = [];
+    for (const projectKey in this.projects) {
+      array.push(this.projects[projectKey].project);
+    }
+    return array;
+  }
+
   addTodoItem (projectId, todoItem) {
     if (this.projects.hasOwnProperty(projectId)) {
       this.projects[projectId].items.unshift(todoItem);
@@ -89,23 +114,6 @@ export class ProjectLibrary {
       });
     }
     return todo;
-  }
-
-  selectProject(projectId) {
-    for (const projectsKey in this.projects) {
-      this.projects[projectsKey].project.selected = false;
-    }
-    this.projects[projectId].project.selected = true;
-    this.#saveLibrary();
-  }
-
-  getSelectedProject() {
-    for (const projectsKey in this.projects) {
-      if (this.projects[projectsKey].project.selected) {
-        return projectsKey;
-        break;
-      }
-    }
   }
 
   editProject(projectId, {name, color}) {
