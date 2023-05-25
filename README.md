@@ -1,6 +1,7 @@
 # TODO List
 
 Full requirements and limitations: https://www.theodinproject.com/lessons/node-path-javascript-todo-list
+
 Live: https://prokhnitskyi.github.io/todo-list/
 
 ## Features
