@@ -116,6 +116,10 @@ export class ProjectLibrary {
     return todo;
   }
 
+  getAllProjectTodos(projectId) {
+    return this.projects[projectId].items;
+  }
+
   editProject(projectId, {name, color}) {
     this.projects[projectId].project.name = name;
     this.projects[projectId].project.color = color;

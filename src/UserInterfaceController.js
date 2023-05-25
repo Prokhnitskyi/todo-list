@@ -73,7 +73,7 @@ export class UserInterfaceController {
   renderTodoItems () {
     this.todosContainer.innerHTML = '';
     const selectedId = this.library.getSelectedProject();
-    const items = this.#filterTodos(this.library.projects[selectedId].items);
+    const items = this.#filterTodos(this.library.getAllProjectTodos(selectedId));
 
     const color = this.library.projects[selectedId].project.color;
     items.forEach(item => {
@@ -311,7 +311,7 @@ export class UserInterfaceController {
 
   updateTags() {
     const selectedId = this.library.getSelectedProject();
-    const items = this.library.projects[selectedId].items;
+    const items = this.library.getAllProjectTodos(selectedId);
     const tags = getAllTags(this.#filterTodos(items));
     this.navigation.renderTags(tags);
   }
