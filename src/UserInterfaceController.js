@@ -293,7 +293,7 @@ export class UserInterfaceController {
       if (inputs['set-due-date'].value) {
         newItem.dueDate = inputs['set-due-date'].value;
       }
-      const tags = parseTags(inputs['set-tags'].value);
+      const tags = this.#parseTags(inputs['set-tags'].value);
       tags.forEach(tag => newItem.addTag(tag));
       const selectedId = this.library.getSelectedProject();
       if (!uuid) {
@@ -312,7 +312,7 @@ export class UserInterfaceController {
   updateTags() {
     const selectedId = this.library.getSelectedProject();
     const items = this.library.getAllProjectTodos(selectedId);
-    const tags = getAllTags(this.#filterTodos(items));
+    const tags = this.#getAllTags(this.#filterTodos(items));
     this.navigation.renderTags(tags);
   }
 
@@ -338,24 +338,25 @@ export class UserInterfaceController {
     this.renderTodoItems();
   }
 
+  #getAllTags (todos) {
+    const array = [];
+    for (const todo of todos) {
+      array.push(...todo.tags);
+    }
+    return array;
+  }
+
+  #parseTags (tagsString) {
+    const formattedSting = tagsString.replaceAll(/,+[ \t]*,*/g, ',');
+    const array = formattedSting.split(',');
+    for (let i = 0; i < array.length; i++) {
+      array[i] = array[i].trim();
+    }
+    return array;
+  }
 }
 
-function getAllTags (todos) {
-  const array = [];
-  for (const todo of todos) {
-    array.push(...todo.tags);
-  }
-  return array;
-}
 
-function parseTags (tagsString) {
-  const formattedSting = tagsString.replaceAll(/,+[ \t]*,*/g, ',');
-  const array = formattedSting.split(',');
-  for (let i = 0; i < array.length; i++) {
-    array[i] = array[i].trim();
-  }
-  return array;
-}
 
 function buildTodoElement({item, blueprint, color}) {
   const todo = blueprint.cloneNode(true);
